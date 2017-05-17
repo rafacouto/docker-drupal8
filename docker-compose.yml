@@ -1,0 +1,15 @@
+
+version: '2'
+
+services:
+  app:
+    image: 'caligari/drupal8:latest'
+    build: './build'
+    hostname: 'drupal8'
+    restart: 'always'
+    volumes:
+      - './drupal:/app/drupal8'
+    network_mode: 'bridge'
+    external_links:
+      - 'postgres_db_1:postgresql'
+
