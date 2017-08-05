@@ -24,6 +24,7 @@ RUN set -ex \
 		' \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends $buildDeps \
+                git \
 	&& docker-php-ext-configure gd \
 		--with-jpeg-dir=/usr/include \
 		--with-png-dir=/usr/include \
@@ -61,4 +62,9 @@ RUN curl -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
 	&& composer self-update
 
 RUN echo 'export PATH=$PATH:$APP_HOME/vendor/bin' >> /etc/profile
+
+RUN pecl install xdebug \
+	&& docker-php-ext-enable xdebug
+
+COPY xdebug.ini /usr/local/etc/php/conf.d/
 
