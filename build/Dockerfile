@@ -53,6 +53,8 @@ RUN set -ex \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& rm -rf /var/lib/apt/lists/* 
 
-
+RUN curl -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
+	&& chmod +x /usr/local/bin/composer \
+	&& composer self-update
 
 
