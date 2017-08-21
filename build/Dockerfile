@@ -1,7 +1,10 @@
 
 FROM php:7-fpm
 
-WORKDIR /app/drupal8
+ENV APP_HOME=/app/drupal8 \
+    WWW_ROOT=$APP_HOME/web
+
+WORKDIR $APP_HOME
 
 COPY drupal8.ini /usr/local/etc/php/conf.d/
 
@@ -57,4 +60,5 @@ RUN curl -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
 	&& chmod +x /usr/local/bin/composer \
 	&& composer self-update
 
+RUN echo 'export PATH=$PATH:$APP_HOME/vendor/bin' >> /etc/profile
 
