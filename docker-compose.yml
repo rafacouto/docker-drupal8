@@ -3,7 +3,7 @@ version: '3'
 
 services:
   app:
-    image: 'caligari/drupal8:latest'
+    image: 'caligari/drupal8:devel'
     build: './build'
     hostname: 'drupal8'
     restart: 'always'
