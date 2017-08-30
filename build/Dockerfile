@@ -25,6 +25,7 @@ RUN set -ex \
 		' \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends $buildDeps \
+                libicu52 \
 	&& docker-php-ext-configure gd \
 		--with-jpeg-dir=/usr/include \
 		--with-png-dir=/usr/include \
