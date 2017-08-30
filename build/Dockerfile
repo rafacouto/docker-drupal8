@@ -10,10 +10,15 @@ COPY drupal8.ini /usr/local/etc/php/conf.d/
 
 RUN set -ex \
 	&& buildDeps=' \
+	        libbz2-dev \
+	        libcurl4-openssl-dev \
 		libfreetype6-dev \
+                libicu-dev \
         	libjpeg62-turbo-dev \
-        	libpng12-dev \
         	libmcrypt-dev \
+        	libmemcached-dev \
+        	libpng12-dev \
+        	libpq-dev \
 	        libssl-dev \
         	libpq-dev \
 	        libbz2-dev \
@@ -30,25 +35,25 @@ RUN set -ex \
 		--with-png-dir=/usr/include \
 		--with-freetype-dir=/usr/include \
 	&& docker-php-ext-install -j "$(nproc)" \
+		bcmath \
+		bz2 \
+		calendar \
+		curl \
+		exif \
+		dom \
 		gd \
+		gettext \
+		iconv \
+                intl \
 		mbstring \
+		mcrypt \
 		opcache \
+		soap \
+		sockets \
 		pdo \
 		pdo_mysql \
 		pdo_pgsql \
 		zip \
-		iconv \
-		mcrypt \
-		bcmath \
-		bz2 \
-		calendar \
-		exif \
-		dom \
-		gettext \
-		opcache \
-		soap \
-		sockets \
-		curl \
 	&& apt-mark manual \
 		libmcrypt4 \
 		libjpeg62-turbo \
