@@ -20,10 +20,6 @@ RUN set -ex \
         	libpng12-dev \
         	libpq-dev \
 	        libssl-dev \
-        	libpq-dev \
-	        libbz2-dev \
-        	libmemcached-dev \
-	        libcurl4-openssl-dev \
         	libxml2-dev \
 		zlib1g-dev \
 		' \
@@ -55,10 +51,10 @@ RUN set -ex \
 		pdo_pgsql \
 		zip \
 	&& apt-mark manual \
-		libmcrypt4 \
-		libjpeg62-turbo \
-		libpq5 \
 		libfreetype6 \
+		libjpeg62-turbo \
+		libmcrypt4 \
+		libpq5 \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& rm -rf /var/lib/apt/lists/* 
 
