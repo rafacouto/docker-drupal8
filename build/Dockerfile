@@ -24,6 +24,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends $buildDeps \
         libicu52 \
+        git \
         mysql-client \
     && docker-php-ext-configure gd \
         --with-jpeg-dir=/usr/include \
@@ -60,16 +61,24 @@ RUN set -ex \
 RUN pecl install redis \
     && docker-php-ext-enable redis
 
-RUN curl -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
+RUN curl -s -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
     && chmod +x /usr/local/bin/composer 
 
 WORKDIR $APP_HOME
 
 RUN useradd -s /bin/bash -d $APP_HOME -M $APP_USER \
-    && chown -R $APP_USER $APP_HOME \
-    && echo 'export PATH=$PATH:$APP_HOME/web/vendor/bin' >> /etc/profile
+    && chown -R $APP_USER $APP_HOME 
 
 USER $APP_USER
 
-RUN composer create-project --no-dev --prefer-dist drupal/drupal web
+RUN composer create-project -n --no-dev --prefer-dist drupal/drupal web \
+    && cd web \
+    && composer require -n --prefer-dist --prefer-stable drush/drush
+
+ENV DRUPAL_ROOT=$APP_HOME/web \
+    PATH=$APP_HOME/web/vendor/bin:$PATH
+
+VOLUME ["$DRUPAL_ROOT/sites", "$DRUPAL_ROOT/modules", "$DRUPAL_ROOT/themes"]
+
+WORKDIR $DRUPAL_ROOT
 
