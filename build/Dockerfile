@@ -1,5 +1,5 @@
 
-FROM php:7-fpm
+FROM php:7.1-fpm
 
 ENV APP_HOME=/app/drupal8 \
     WWW_ROOT=$APP_HOME/web
